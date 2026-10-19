@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    font-style: normal;
+}
+
+body {
+    background-color: #222121;
+    color: #ffffff;
+    padding-bottom: 40px;
+}
+
+/* Título Grande */
+.titulo-grande {
+    color: #ffffff;
+    text-align: center;
+    font-size: 36px;
+    margin: 20px 0;
+}
+
+/* Botón Volver */
+.volver {
+    display: block;
+    margin: 20px auto 0 auto;
+    width: fit-content;
+}
+
+.volver div {
+    padding-top: 8px;
+    width: 400px;
+    height: 40px;
+    background-color: #e0d9d9;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.volver p {
+    color: #050505;
+}
+
+/* Botón Agregar */
+.agregar {
+    display: block;
+    margin: 25px auto;
+    width: fit-content;
+}
+
+.agregar div {
+    width: 200px;
+    height: 45px;
+    background-color: #e0d9d9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.agregar p {
+    color: #d41e1e;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ========================================= */
+/* TARJETAS DE MENÚ  */
+
+.contenedor-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.card-platillo {
+    background-color: #333333;
+    border-radius: 12px;
+    width: 280px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-imagen {
+    width: 100%;
+    height: 160px;
+}
+
+.card-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+    color: #ffffff;
+}
+
+.card-header-info {
+    margin-bottom: 12px;
+}
+
+.card-title-box h3 {
+    font-size: 18px;
+    color: #ffc107;
+    margin-bottom: 6px;
+}
+
+.card-tiempo, .card-envio, .card-rating {
+    font-size: 13px;
+    color: #cccccc;
+    margin-top: 4px;
+}
+
+.card-botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-card-borrar, .btn-card-editar {
+    flex: 1;
+    padding: 8px 0;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-card-borrar {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.btn-card-editar {
+    background-color: #ffc107;
+    color: #000000;
+}
+
+/* ========================================= */
+/* ICKETS DE COCINA */
+
+.contenedor-tickets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.ticket {
+    background-color: #fffde7;
+    color: #111111;
+    width: 260px;
+    padding: 18px;
+    border-radius: 6px;
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    border-top: 5px solid #d32f2f;
+}
+
+.ticket-header h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.ticket-fecha {
+    font-size: 12px;
+    color: #333333;
+    margin-bottom: 8px;
+}
+
+.ticket-linea {
+    border-bottom: 2px dashed #777777;
+    margin: 10px 0;
+}
+
+.ticket-comidas p {
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.ticket-comidas ul {
+    list-style-type: none;
+    padding-left: 5px;
+}
+
+.ticket-comidas li {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3px 0;
+    color: #000000;
+}
+
+/* ========================================= */
+/* ESTILOS DE LA PÁGINA PRINCIPAL (index.html)*/
+/* ========================================= */
+
+.div-inicio {
+    background-color: #333333;
+    width: 80%;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.div-inicio h2 {
+    color: #ffc107;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.div-inicio h3 {
+    color: #cccccc;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.div-inicio a {
+    color: #000000;
+    background-color: #ffc107;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 24px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.div-inicio a:hover {
+    background-color: #ffca2c;
+}

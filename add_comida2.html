@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{url_for('static', filename='CSS/Estilitos.css')}}">   
+        <title>Agregar comida</title>
+    </head>
+    <body>
+        <a href="{{ url_for('menu') }}" class="volver">
+            <div>
+                <p>Volver a menu</p>
+            </div>
+        </a>
+
+        <h2 class="titulo-grande">Agregar nueva comida</h2>
+        <form action="{{ url_for('add_comida') }}" method="POST">
+            <input type="text" name="nombre" placeholder="Nombre de la comida" required><br>
+            <input type="time" step="1" name="tiempo_preparacion" required><br>
+            <input type="time" step="1" name="tiempo_coccion" required><br>
+            <button type="submit">Guardar</button>
+        </form>
+
+    </body>
+</html>
