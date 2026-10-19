@@ -11,5 +11,6 @@
 ## Setup
 
 ``` bash
-uvicorn app.source.main:server --reload
+pip install gunicorn
+gunicorn app.source.main:app -w 4 -b 127.0.0.1:8000
 ```

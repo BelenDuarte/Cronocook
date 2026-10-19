@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <!-- Tailwind CSS (CDN para desarrollo rápido) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- HTMX CDN -->
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-</head>
-<body class="bg-slate-50 text-slate-800 flex items-center justify-center min-h-screen">
+    <title>Apartado Principal</title>
+    <!-- Favicon apuntando directo a la ruta estática -->
+    <link rel="icon" type="image/png" href="static/img/favicon.ico">
     
-    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full text-center border border-slate-100">
-        <span class="text-xs font-semibold tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase">Fullstack Python</span>
-        <h1 class="text-3xl font-extrabold text-slate-900 mt-3 mb-2">Litestar + HTMX</h1>
-        <p class="text-slate-500 mb-6 text-sm">Tu entorno con Jinja2 y Tailwind CSS está funcionando perfectamente.</p>
-        
-        <!-- Botón interactivo con HTMX -->
-        <button hx-get="/api/saludo" 
-                hx-target="#resultado" 
-                hx-swap="innerHTML"
-                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl transition-all shadow-sm shadow-indigo-100 cursor-pointer">
-            Probar petición HTMX
-        </button>
+    <!-- Tailwind CSS (CDN o tu archivo compilado) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="/static/CSS/Estilitos.css">      
+</head>
 
-        <!-- Contenedor donde HTMX inyectará la respuesta del servidor -->
-        <div id="resultado"></div>
+<body class="bg-slate-50 text-slate-800 flex flex-col items-center justify-center min-h-screen gap-6">
+
+    <div class="div-inicio bg-white p-6 rounded-xl shadow-md w-80 text-center">
+        <h2 class="text-xl font-bold mb-2">MENU</h2>
+        <h3 class="text-slate-500 text-sm mb-4">Agrega, Edita o Borra platillos</h3>
+        <a href="/menu" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Ver Menu Completo</a>
+    </div>
+
+    <div class="div-inicio bg-white p-6 rounded-xl shadow-md w-80 text-center">
+        <h2 class="text-xl font-bold mb-2">Pedidos</h2>
+        <h3 class="text-slate-500 text-sm mb-4">Ve y agrega +pedidos</h3>
+        <a href="/pedidos" class="inline-block bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition">Ver Pedidos</a>
     </div>
 
 </body>
