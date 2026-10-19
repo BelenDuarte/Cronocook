@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: Cronocook API
+  version: 1.0.0
+  description: API para la gestión de comidas y pedidos de la hamburguesería.
+servers:
+  - url: http://localhost:3000/api
+    description: Servidor local de desarrollo
+paths:
+  /comidas:
+    get:
+      summary: Listar todas las comidas
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comida'
+    post:
+      summary: Agregar una nueva comida
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComidaInput'
+      responses:
+        '201':
+          description: Comida creada exitosamente
+  /pedidos:
+    get:
+      summary: Listar todos los pedidos
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pedido'
+    post:
+      summary: Crear un nuevo pedido con sus detalles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoInput'
+      responses:
+        '201':
+          description: Pedido registrado exitosamente
+
+components:
+  schemas:
+    Comida:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        nombre:
+          type: string
+          example: "Cheese Burguer"
+        tiempo_preparacion:
+          type: string
+          format: time
+          example: "00:01:30"
+        tiempo_coccion:
+          type: string
+          format: time
+          example: "00:04:00"
+          
+    ComidaInput:
+      type: object
+      required:
+        - nombre
+        - tiempo_preparacion
+        - tiempo_coccion
+      properties:
+        nombre:
+          type: string
+          example: "Doble Meat Burguer"
+        tiempo_preparacion:
+          type: string
+          format: time
+          example: "00:02:00"
+        tiempo_coccion:
+          type: string
+          format: time
+          example: "00:06:00"
+
+    PedidoDetalle:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        id_pedido:
+          type: integer
+          example: 3
+        id_comida:
+          type: integer
+          example: 2
+        cantidad:
+          type: integer
+          example: 1
+
+    Pedido:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3
+        fecha_pedido:
+          type: string
+          format: date-time
+          example: "2026-10-15T14:28:59Z"
+        detalles:
+          type: array
+          items:
+            $ref: '#/components/schemas/PedidoDetalle'
+
+    PedidoInput:
+      type: object
+      required:
+        - detalles
+      properties:
+        detalles:
+          type: array
+          items:
+            type: object
+            required:
+              - id_comida
+              - cantidad
+            properties:
+              id_comida:
+                type: integer
+                example: 2
+              cantidad:
+                type: integer
+                example: 3
