@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='../static')
 
 #-------------------- Configuración y Base de Datos ------------------------
 app.secret_key = "a_secure_random_key"

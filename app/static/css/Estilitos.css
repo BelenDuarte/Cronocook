@@ -1,0 +1,460 @@
+
+/* Base */
+:root{
+    --green: #27ae60;
+    --black: #192a56;
+    --red: #FF0000;
+    --light-color: #666;
+    --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
+    --scren-width: 900px;
+
+}
+
+
+* {
+    margin: 0;padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all .2s linear;
+    outline: none; border: none;
+}
+
+html{
+    font-size: 80%;
+    overflow-x: hidden;
+    scroll-padding-top: 5.5rem;
+    scroll-behavior: smooth;
+}
+/* Slider */
+.btn
+{
+    margin-top: 2rem;
+    display: inline-grid;
+    font-size: 1.5rem;
+    color: white;
+    background: black;
+    border-radius: .5rem;
+    cursor: pointer;
+    padding: .8rem 5rem;
+}
+
+.btn:hover
+{
+    background: var(--red);
+    letter-spacing: .1rem;
+}
+
+section
+{
+    padding: 2rem 8%;
+    padding-left: 1.5rem;
+}
+
+section:nth-child(even)
+{
+    background: gold;
+}
+
+.home .home-slide .slide
+{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    gap: 2rem;
+    padding-top: 5rem;
+}
+
+.home .home-slide .slide .contenido /* Posicionamiento de contenido*/
+{
+    flex: 1 1 45rem;
+    padding-left: 45rem;
+
+}
+
+.home .home-slide .slide .image /* Posicionamiento de imagen*/
+{
+    flex: 1 1 45rem;
+    padding-right: 45rem;
+}
+
+.home .home-slide .slide .image img /* Imagenes */
+{
+    width: 750px;
+    height: auto;
+}
+
+.home .home-slide .slide .contenido span /* Texto */
+{
+    color: var(--red);
+    font-size: 3.5rem;
+    font-weight: bold;
+    opacity: 50%;
+}
+
+.home .home-slide .slide .contenido h3
+{
+    color: var(--black);
+    font-size: 7rem;
+    font-weight: bolder;
+
+}
+
+.home .home-slide .slide .contenido p
+{
+    color: var(--light-color);
+    font-size: 2rem;
+    font-style: italic;
+    padding-top: 1.5rem;
+}
+/* Texto */
+
+
+/* Header */
+header
+{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: white;
+    padding: 1rem 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+}
+
+header .logo
+{
+    color:var(--black);
+    font-size: 2.5rem;
+    font-weight: bolder;
+}
+
+header .logo i
+{
+    color:var(--red);
+
+}
+
+header .navbar a
+{
+    font-size: 1.7rem;
+    border-radius: .5rem;
+    padding: .5rem 1.5rem;
+    color: var(--light-color);
+}
+
+header .navbar .active,
+header .navbar  a:hover
+{
+    color:#ffffff;
+    background: var(--red);
+
+}
+
+header .icons a{
+    cursor: pointer;
+    margin-left: .5rem;
+    height: 4.5rem; line-height: 4.5rem;
+    width: 4.5rem;
+    font-size: 1.7rem;
+    text-align: center;
+    color: var(--black);
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+header .icons a:hover{
+    color: #ffffff;
+    background: var(--red);
+    transform: rotate3d(30, 20, 10, 360deg);
+}
+
+
+header .icons #menu-bar
+{
+    display: none;
+}
+
+
+
+/* Header */
+
+
+a {
+    text-decoration: none;
+    font-style: normal;
+}
+
+.home
+{
+
+}
+
+
+/*body {
+    background-color: #222121;
+    color: #ffffff;
+    padding-bottom: 40px;
+}*/
+
+/* Título Grande */
+.titulo-grande {
+    color: #ffffff;
+    text-align: center;
+    font-size: 36px;
+    margin: 20px 0;
+}
+
+/* Botón Volver */
+.volver {
+    display: block;
+    margin: 20px auto 0 auto;
+    width: fit-content;
+}
+
+.volver div {
+    padding-top: 8px;
+    width: 400px;
+    height: 40px;
+    background-color: #e0d9d9;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.volver p {
+    color: #050505;
+}
+
+/* Botón Agregar */
+.agregar {
+    display: block;
+    margin: 25px auto;
+    width: fit-content;
+}
+
+.agregar div {
+    width: 200px;
+    height: 45px;
+    background-color: #e0d9d9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.agregar p {
+    color: #d41e1e;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ========================================= */
+/* TARJETAS DE MENÚ  */
+
+.contenedor-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.card-platillo {
+    background-color: #333333;
+    border-radius: 12px;
+    width: 280px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-imagen {
+    width: 100%;
+    height: 160px;
+}
+
+.card-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+    color: #ffffff;
+}
+
+.card-header-info {
+    margin-bottom: 12px;
+}
+
+.card-title-box h3 {
+    font-size: 18px;
+    color: #ffc107;
+    margin-bottom: 6px;
+}
+
+.card-tiempo, .card-envio, .card-rating {
+    font-size: 13px;
+    color: #cccccc;
+    margin-top: 4px;
+}
+
+.card-botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-card-borrar, .btn-card-editar {
+    flex: 1;
+    padding: 8px 0;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-card-borrar {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.btn-card-editar {
+    background-color: #ffc107;
+    color: #000000;
+}
+
+/* ========================================= */
+/* ICKETS DE COCINA */
+
+.contenedor-tickets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.ticket {
+    background-color: #fffde7;
+    color: #111111;
+    width: 260px;
+    padding: 18px;
+    border-radius: 6px;
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    border-top: 5px solid #d32f2f;
+}
+
+.ticket-header h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.ticket-fecha {
+    font-size: 12px;
+    color: #333333;
+    margin-bottom: 8px;
+}
+
+.ticket-linea {
+    border-bottom: 2px dashed #777777;
+    margin: 10px 0;
+}
+
+.ticket-comidas p {
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.ticket-comidas ul {
+    list-style-type: none;
+    padding-left: 5px;
+}
+
+.ticket-comidas li {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3px 0;
+    color: #000000;
+}
+
+/* ========================================= */
+/* ESTILOS DE LA PÁGINA PRINCIPAL (index.html)*/
+/* ========================================= */
+
+.div-inicio {
+    background-color: #333333;
+    width: 80%;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.div-inicio h2 {
+    color: #ffc107;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.div-inicio h3 {
+    color: #cccccc;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.div-inicio a {
+    color: #000000;
+    background-color: #ffc107;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 24px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.div-inicio a:hover {
+    background-color: #ffca2c;
+}
+
+/* Cambio de Media */
+
+@media (max-width: 1100px)
+{
+    html{
+        font-size: 50%;
+    }
+    header{
+        padding: 1rem 2rem;
+    }
+
+    header .navbar
+    {
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: #fff;
+        border-top: .1rem solid rgba(0,0,0,.2);
+        padding: 1rem;
+    }
+}
