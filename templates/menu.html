@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Estilitos.css') }}">               
+</head>
+
+<body>
+    <a href="{{ url_for('index') }}" class="volver">
+        <div>
+            <p>Volver a la pagina principal</p>
+        </div>
+    </a> 
+
+    <h2 class="titulo-grande">Lista del menu</h2>
+
+    <!-- Contenedor tarjetas -->
+    <div class="contenedor-cards" id="lista-menu">
+        {% for comida in menu %}
+        <div class="card-platillo" id="comida-{{ comida[0] }}">
+
+            <div class="card-imagen">
+                <img src="{{comida[4]}}" alt="Imagen de {{comida[1]}}" width="100" height="100">
+            </div>
+
+            <div class="card-body">
+                <div class="card-header-info">
+                    <div class="card-title-box">
+                        <h3><i class="fa-solid fa-burger"></i> {{ comida[1] }}</h3>
+                        <p class="card-tiempo"><i class="fa-regular fa-clock"></i> Prep: {{ comida[2] }} | Coc: {{ comida[3] }}</p>
+                    </div>
+                </div>
+
+                <div class="card-botones">
+                    <form action="{{ url_for('delete_comida', id=comida[0]) }}" method="POST">
+                        <button type="submit" class="btn-card-borrar">Borrar</button>
+                    </form>
+
+                    <button class="btn-card-editar"
+                            hx-get="{{ url_for('update_comida', id=comida[0]) }}"
+                            hx-target="body">
+                        Editar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('add_comida') }}" class="agregar">
+        <div>
+            <p>Agregar comida</p>
+        </div>
+    </a> 
+
+</body>
+
+</html>

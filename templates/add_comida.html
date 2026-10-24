@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Estilitos.css') }}">   
+    <title>CronoCook — Agregar Comida</title>
+</head>
+<body>
+
+    <a href="{{ url_for('menu') }}" class="volver">
+        <div>
+            <i class="fa-solid fa-arrow-left"></i>
+            <p>Volver al Menú</p>
+        </div>
+    </a>
+
+    <h2 class="titulo-grande"><i class="fa-solid fa-burger" style="color: var(--primary-amber);"></i> Agregar Nueva Comida</h2>
+
+    <form action="{{ url_for('add_comida') }}" method="POST">
+        <label for="nombre"><i class="fa-solid fa-tag"></i> Nombre de la Hamburguesa / Comida:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: Doble Bacon Burger" required>
+
+        <label for="tiempo_preparacion"><i class="fa-solid fa-clock"></i> Tiempo de Preparación (Ensamble):</label>
+        <input type="time" id="tiempo_preparacion" step="1" name="tiempo_preparacion" value="00:01:30" required>
+
+        <label for="tiempo_coccion"><i class="fa-solid fa-fire"></i> Tiempo de Cocción (Plancha/Fuego):</label>
+        <input type="time" id="tiempo_coccion" step="1" name="tiempo_coccion" value="00:04:00" required>
+
+        <label for="url_imagen"><i class="fa-solid fa-image"></i> URL de la Imagen:</label>
+        <input type="text" id="url_imagen" name="url_imagen" placeholder="https://ejemplo.com/hamburguesa.jpg" required>
+
+        <button type="submit">
+            <i class="fa-solid fa-plus-circle"></i> Guardar en Menú
+        </button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
+        <title>Apartado Principal</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='CSS/Estilitos.css')}}">      
+    </head>
+
+    <body>
+        <div class = "div-inicio">
+            <h2>MENU</h2>
+            <h3>Agrega, Edita o Borra platillos</h3>
+            <a href="{{ url_for('menu') }}">Ver Menu Completo</a>
+        </div>
+
+        <div class = "div-inicio">
+            <h2>Pedidos</h2>
+            <h3>Ve y agrega +pedidos</h3>
+            <a href="{{ url_for('pedidos') }}">Ver Pedidos</a>
+        </div>
+
+    </body>
+</html> 

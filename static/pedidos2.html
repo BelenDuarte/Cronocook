@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pedidos</title>
+    <!-- Script de htmx -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Estilitos.css') }}">            
+</head>
+
+<body>
+
+    <a href="{{ url_for('index') }}" class="volver">
+        <div>
+            <p>Volver a la pagina principal</p>
+        </div>
+    </a> 
+
+    <h2 class="titulo-grande">Lista de pedidos</h2>
+
+    <!-- htmx actualiza -->
+    <div class="contenedor-tickets"
+         hx-get="{{ url_for('pedidos') }}"
+         hx-trigger="every 10s"
+         hx-select=".contenedor-tickets"
+         hx-swap="outerHTML">
+        
+        {% for pedido in pedidos %}
+        <div class="ticket" id="pedido-{{ pedido[0] }}">
+            <div class="ticket-header">
+                <h3>PEDIDO #{{ pedido[0] }}</h3>
+            </div>
+            
+            <p class="ticket-fecha"><strong>Fecha/Hora:</strong> {{ pedido[1] }}</p>
+            <div class="ticket-linea"></div>
+            
+            <div class="ticket-comidas">
+                <p><strong>Comidas:</strong></p>
+                <ul>
+                    {% for nombre_comida, cantidad in pedidos_agrupados.get(pedido[0], []) %}
+                        <li>{{ cantidad }}x {{ nombre_comida }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <a href="{{ url_for('add_pedido') }}" class="agregar">
+        <div>
+            <p>Agregar pedido</p>
+        </div>
+    </a>  
+
+</body>
+
+</html>

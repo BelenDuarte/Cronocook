@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CronoCook — Pantalla de Cocina</title>
+    <!-- Script de htmx -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Estilitos.css') }}">            
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+        <a href="{{ url_for('index') }}" class="volver" style="margin: 0;">
+            <div>
+                <i class="fa-solid fa-house"></i>
+                <p>Panel Principal</p>
+            </div>
+        </a>
+        <a href="{{ url_for('configuracion_turno') }}" class="volver" style="margin: 0;">
+            <div>
+                <i class="fa-solid fa-users-gear"></i>
+                <p>Ajustar Empleados</p>
+            </div>
+        </a>
+        <a href="{{ url_for('tiempo_espera') }}" class="volver" style="margin: 0;">
+            <div>
+                <i class="fa-solid fa-hourglass-half"></i>
+                <p>Monitor de Tiempos</p>
+            </div>
+        </a>
+    </div>
+
+    <h2 class="titulo-grande">
+        <i class="fa-solid fa-kitchen-set" style="color: var(--primary-amber);"></i> Pantalla de Cocina — Comandas en Vivo
+    </h2>
+
+    <!-- MENSAJES FLASH -->
+    <div style="max-width: 1150px; margin: 0 auto 15px auto; padding: 0 15px;">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #10b981; padding: 12px 18px; border-radius: var(--radius-md); font-weight: 600; text-align: center; margin-bottom: 12px;">
+                    <i class="fa-solid fa-circle-check"></i> {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- TRACKER DE CAPACIDAD EN VIVO -->
+    <section class="capacity-live-tracker">
+        <div class="capacity-tracker-card">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="pulse-dot"></span>
+                <div>
+                    <h4 style="font-size: 16px; font-weight: 700; color: #ffffff;">Capacidad del Turno en Pantalla</h4>
+                    <p style="font-size: 13px; color: var(--text-secondary);">
+                        {{ config['cocineros_coccion'] }} cocineros en cocción × {{ config['pedidos_por_cocinero'] }} = 
+                        <strong>Máx {{ config['cap_coccion'] }} pedidos a la vez</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div class="cap-badge">
+                    Slots Ocupados: <strong style="color: #f59e0b;">{{ slots_ocupados }} / {{ config['cap_coccion'] }}</strong>
+                </div>
+                <div class="cap-badge">
+                    Slots Libres: <strong style="color: #10b981;">{{ slots_disponibles }}</strong>
+                </div>
+                <div class="cap-badge">
+                    En Cola de Espera: <strong style="color: #ef4444;">{{ pedidos_en_cola|length }}</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENEDOR DE TICKETS ACTIVOS CON POLLING HTMX -->
+    <div class="contenedor-tickets"
+         hx-get="{{ url_for('pedidos') }}"
+         hx-trigger="every 10s"
+         hx-select=".contenedor-tickets"
+         hx-swap="outerHTML">
+        
+        {% for pedido in pedidos %}
+        <div class="ticket" id="pedido-{{ pedido[0] }}">
+            <div class="ticket-header">
+                <h3>PEDIDO #{{ pedido[0] }}</h3>
+            </div>
+            
+            <p class="ticket-fecha"><strong>Fecha/Hora:</strong> {{ pedido[1] }}</p>
+            <div class="ticket-linea"></div>
+            
+            <div class="ticket-comidas">
+                <p><strong>Detalle de Platillos:</strong></p>
+                <ul>
+                    {% for nombre_comida, cantidad in pedidos_agrupados.get(pedido[0], []) %}
+                        <li><i class="fa-solid fa-check" style="color: #d32f2f; margin-right: 4px;"></i> {{ cantidad }}x {{ nombre_comida }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Botón para finalizar pedido y liberar el slot -->
+            <form action="{{ url_for('completar_pedido', id=pedido[0]) }}" method="POST" style="margin-top: 15px; padding: 0; background: transparent; border: none; box-shadow: none;">
+                <button type="submit" class="btn-despachar-ticket">
+                    <i class="fa-solid fa-circle-check"></i> Listo / Despachar
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <div style="text-align: center; color: var(--text-secondary); padding: 40px; width: 100%;">
+            <i class="fa-solid fa-utensils" style="font-size: 44px; margin-bottom: 12px; color: var(--text-muted);"></i>
+            <p style="font-size: 16px;">No hay pedidos activos en pantalla en este momento.</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- SECCIÓN DE COLA DE ESPERA SI LA CAPACIDAD FUE SUPERADA -->
+    {% if pedidos_en_cola and pedidos_en_cola|length > 0 %}
+    <div class="queue-preview-box">
+        <div class="queue-preview-header">
+            <div>
+                <h3 style="font-size: 18px; font-weight: 700; color: #f59e0b;">
+                    <i class="fa-solid fa-clock-rotate-left"></i> En Cola de Espera (Aguardando Puesto)
+                </h3>
+                <p style="font-size: 13px; color: var(--text-secondary);">
+                    La cocina alcanzó su límite de {{ config['cap_coccion'] }} pedidos. Al despachar un pedido arriba, el siguiente entra de inmediato a pantalla.
+                </p>
+            </div>
+            <span style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 6px 14px; border-radius: var(--radius-full); font-size: 13px; font-weight: 700;">
+                {{ pedidos_en_cola|length }} en espera
+            </span>
+        </div>
+
+        {% for p_cola in pedidos_en_cola %}
+        <div class="queue-item-card">
+            <div>
+                <strong style="color: #ffffff; font-size: 15px;">Pedido #{{ p_cola[0] }}</strong>
+                <span style="color: var(--text-muted); margin-left: 10px; font-size: 12px;">Ingreso: {{ p_cola[1] }}</span>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 13px;">
+                {% for n_comida, cant in pedidos_agrupados.get(p_cola[0], []) %}
+                    {{ cant }}x {{ n_comida }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+            <span style="color: #f59e0b; font-size: 12px; font-weight: 600;">
+                <i class="fa-solid fa-hourglass-start"></i> Próximo en entrar
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <a href="{{ url_for('add_pedido') }}" class="agregar">
+        <div>
+            <p><i class="fa-solid fa-plus-circle"></i> Nuevo Pedido (Caja)</p>
+        </div>
+    </a>  
+
+</body>
+
+</html>

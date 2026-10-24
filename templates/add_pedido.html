@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
+    <title>Menú — CronoCook</title>
+    <!-- FontAwesome 6.4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos centralizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Estilitos.css') }}">   
+</head>
+
+<body style="background-color: #121214;">
+
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+    <nav class="menu-top-nav">
+        <a href="{{ url_for('index') }}" class="btn-nav-chip">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Panel Principal</span>
+        </a>
+        <a href="{{ url_for('pedidos') }}" class="btn-nav-chip">
+            <i class="fa-solid fa-receipt"></i>
+            <span>Ver Cocina</span>
+        </a>
+    </nav>
+
+    <!-- TÍTULO ESTILO MANUSCRITO (IDÉNTICO A LA REFERENCIA) -->
+    <h1 class="menu-handwritten-title">Menú</h1>
+
+    <!-- FORMULARIO DE ENVÍO DE PEDIDO A COCINA -->
+    <form action="{{ url_for('add_pedido') }}" method="POST" id="formNuevoPedido" class="order-form-container">
+
+        <!-- CONTENEDOR DE TARJETAS DE HAMBURGUESAS -->
+        <div class="burger-menu-grid">
+            {% for comida in comidas %}
+            <div class="burger-menu-card" id="card-{{ comida[0] }}">
+                
+                <!-- Imagen centrada de la hamburguesa -->
+                <div class="burger-card-img-wrap">
+                    <img src="{{ comida[4] }}" 
+                         alt="{{ comida[1] }}" 
+                         class="burger-card-img" 
+                         onerror="this.src='https://cdn-icons-png.flaticon.com/512/98/98017.png'">
+                </div>
+
+                <!-- Nombre en tipografía estilo manuscrito -->
+                <h3 class="burger-card-name">{{ comida[1] }}</h3>
+
+                <!-- Tiempos de preparación y cocción de la hamburguesa -->
+                <p class="burger-card-info">
+                    <i class="fa-regular fa-clock" style="color: var(--primary-amber);"></i>
+                    Prep: {{ comida[2] }} | Coc: {{ comida[3] }}
+                </p>
+
+                <!-- Contador abajo estilo píldora dorada -->
+                <div class="counter-pill" id="pill-{{ comida[0] }}">
+                    <button type="button" class="btn-qty" onclick="modificarCantidad('{{ comida[0] }}', -1)" title="Restar uno">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                    
+                    <span class="qty-number" id="display-{{ comida[0] }}">0</span>
+                    
+                    <button type="button" class="btn-qty" onclick="modificarCantidad('{{ comida[0] }}', 1)" title="Sumar uno">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+
+                    <!-- Campo oculto que recibe Flask con prefijo cantidad_ -->
+                    <input type="hidden" 
+                           name="cantidad_{{ comida[0] }}" 
+                           id="input-{{ comida[0] }}" 
+                           class="input-cantidad-item" 
+                           value="0">
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- BARRA INFERIOR FLOTANTE PARA CONFIRMAR Y ENVIAR A COCINA -->
+        <footer class="bottom-order-bar">
+            <div class="order-bar-content">
+                <div class="order-summary-info">
+                    <div class="order-total-pill">
+                        <i class="fa-solid fa-burger"></i>
+                        <span id="totalItemsBadge">0 hamburguesas</span>
+                    </div>
+                    <span class="order-role-notice">
+                        <i class="fa-solid fa-circle-info" style="color: var(--primary-amber);"></i>
+                        Puesto de Caja: Al confirmar, la orden entra directamente a las pantallas de cocina.
+                    </span>
+                </div>
+
+                <button type="submit" id="btnEnviarCocina" class="btn-submit-kitchen" disabled>
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Enviar a Cocina</span>
+                </button>
+            </div>
+        </footer>
+
+    </form>
+
+    <!-- LÓGICA INTERACTIVA DEL CONTADOR Y SELECCIÓN -->
+    <script>
+        function modificarCantidad(idComida, delta) {
+            const input = document.getElementById('input-' + idComida);
+            const display = document.getElementById('display-' + idComida);
+            const card = document.getElementById('card-' + idComida);
+            const pill = document.getElementById('pill-' + idComida);
+
+            let valorActual = parseInt(input.value) || 0;
+            let nuevoValor = valorActual + delta;
+
+            if (nuevoValor < 0) nuevoValor = 0;
+            if (nuevoValor > 99) nuevoValor = 99; // Límite de seguridad
+
+            input.value = nuevoValor;
+            display.innerText = nuevoValor;
+
+            // Feedback visual en la tarjeta
+            if (nuevoValor > 0) {
+                card.classList.add('active-order');
+                pill.classList.add('has-value');
+            } else {
+                card.classList.remove('active-order');
+                pill.classList.remove('has-value');
+            }
+
+            actualizarResumenTotal();
+        }
+
+        function actualizarResumenTotal() {
+            const inputs = document.querySelectorAll('.input-cantidad-item');
+            let total = 0;
+
+            inputs.forEach(inp => {
+                total += parseInt(inp.value) || 0;
+            });
+
+            const totalBadge = document.getElementById('totalItemsBadge');
+            const btnEnviar = document.getElementById('btnEnviarCocina');
+
+            if (total === 1) {
+                totalBadge.innerText = '1 hamburguesa';
+            } else {
+                totalBadge.innerText = total + ' hamburguesas';
+            }
+
+            if (total > 0) {
+                btnEnviar.removeAttribute('disabled');
+                btnEnviar.style.transform = 'scale(1.02)';
+            } else {
+                btnEnviar.setAttribute('disabled', 'disabled');
+                btnEnviar.style.transform = 'none';
+            }
+        }
+
+        // Validación antes de enviar
+        document.getElementById('formNuevoPedido').addEventListener('submit', function(e) {
+            const inputs = document.querySelectorAll('.input-cantidad-item');
+            let total = 0;
+            inputs.forEach(inp => total += parseInt(inp.value) || 0);
+
+            if (total === 0) {
+                e.preventDefault();
+                alert('Por favor selecciona al menos una hamburguesa antes de enviar a cocina.');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

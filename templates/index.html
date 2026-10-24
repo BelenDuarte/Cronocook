@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
+    <title>CronoCook — Panel de Control Principal</title>
+    <!-- FontAwesome 6.4 para iconografía -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos modernos centralizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Estilitos.css') }}">      
+</head>
+
+<body>
+
+    <!-- CABECERA SUPERIOR DEL SISTEMA -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="brand-wrapper">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-burger"></i>
+                </div>
+                <div class="brand-info">
+                    <h1>CronoCook</h1>
+                    <p>Sistema Inteligente de Gestión de Cocina & Balanceo de Capacidad</p>
+                </div>
+            </div>
+
+            <div class="status-badges">
+                <div class="status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Sistema Operativo</span>
+                </div>
+                <div class="status-pill">
+                    <i class="fa-solid fa-clock" style="color: var(--primary-amber);"></i>
+                    <span>Control de Turnos Activo</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- BANNER INFORMATIVO DE CAPACIDAD Y REGLAS DE TURNO -->
+    <section class="capacity-banner">
+        <div class="capacity-box">
+            <div class="capacity-title">
+                <i class="fa-solid fa-users-gear"></i>
+                <div>
+                    <h3>Balanceo de Cocina por Puestos</h3>
+                    <p>Capacidad actual: <strong>{{ config['cap_coccion'] }} pedidos simultáneos</strong> ({{ config['pedidos_por_cocinero'] }} por cocinero)</p>
+                </div>
+            </div>
+            <div class="capacity-tags" style="align-items: center;">
+                <div class="cap-badge">
+                    <i class="fa-solid fa-fire-burner"></i> Cocción: <strong>{{ config['cocineros_coccion'] }} cocineros</strong>
+                </div>
+                <div class="cap-badge">
+                    <i class="fa-solid fa-utensils"></i> Preparación: <strong>{{ config['cocineros_preparacion'] }} preparadores</strong>
+                </div>
+                <a href="{{ url_for('configuracion_turno') }}" class="btn-action-secondary" style="padding: 6px 14px; font-size: 13px; text-decoration: none;">
+                    <i class="fa-solid fa-pen-to-square"></i> Editar Empleados
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENEDOR PRINCIPAL DEL DASHBOARD -->
+    <main class="dashboard-main">
+        <div class="dashboard-grid">
+
+            <!-- TARJETA 1: PUESTO DE CAJA (TERMINAL DE ATENCIÓN) -->
+            <div class="hub-card highlight-caja">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-cash-register"></i>
+                        </div>
+                        <span class="card-role-tag caja">Puesto de Caja</span>
+                    </div>
+
+                    <div class="card-content">
+                        <h2>Toma de Pedidos</h2>
+                        <p>Terminal para el empleado de mostrador. Carga de órdenes de clientes sin cobro, con cálculo automático de entrada a cocina.</p>
+                    </div>
+                </div>
+
+                <div class="card-actions-group">
+                    <a href="{{ url_for('add_pedido') }}" class="btn-action-primary">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>Tomar Nuevo Pedido</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TARJETA 2: MONITORES DE COCINA (KDS) -->
+            <div class="hub-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-kitchen-set"></i>
+                        </div>
+                        <span class="card-role-tag live">En Vivo • HTMX</span>
+                    </div>
+
+                    <div class="card-content">
+                        <h2>Monitores de Cocina</h2>
+                        <p>Pantalla en tiempo real para cocineros de plancha (cocción) y mesa de armado (preparación). Actualización automática cada 10s.</p>
+                    </div>
+                </div>
+
+                <div class="card-actions-group">
+                    <a href="{{ url_for('pedidos') }}" class="btn-action-primary">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span>Ver Comandas en Pantalla</span>
+                    </a>
+                    <a href="{{ url_for('tiempo_espera') }}" class="btn-action-secondary">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                        <span>Monitor de Tiempos y Cola</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TARJETA 3: GESTIÓN DE MENÚ Y TIEMPOS -->
+            <div class="hub-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-burger"></i>
+                        </div>
+                        <span class="card-role-tag">Catálogo</span>
+                    </div>
+
+                    <div class="card-content">
+                        <h2>Menú y Tiempos</h2>
+                        <p>Administra los platillos disponibles, fotos y los tiempos estándar de cocción y preparación de cada producto.</p>
+                    </div>
+                </div>
+
+                <div class="card-actions-group">
+                    <a href="{{ url_for('menu') }}" class="btn-action-primary">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Ver Menú Completo</span>
+                    </a>
+                    <a href="{{ url_for('add_comida') }}" class="btn-action-secondary">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Agregar Nuevo Platillo</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px;">
+        <p>🍔 CronoCook &copy; 2026 — Sistema de Cocina & Gestión de Tiempos de Turno</p>
+    </footer>
+
+</body>
+</html>

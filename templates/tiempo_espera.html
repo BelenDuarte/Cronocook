@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CronoCook — Monitor de Tiempos y Cola</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Estilitos.css') }}">               
+</head>
+
+<body>
+
+    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+        <a href="{{ url_for('index') }}" class="volver" style="margin: 0;">
+            <div>
+                <i class="fa-solid fa-house"></i>
+                <p>Panel Principal</p>
+            </div>
+        </a>
+        <a href="{{ url_for('pedidos') }}" class="volver" style="margin: 0;">
+            <div>
+                <i class="fa-solid fa-receipt"></i>
+                <p>Ver Pedidos en Cocina</p>
+            </div>
+        </a>
+    </div>
+
+    <h2 class="titulo-grande">
+        <i class="fa-solid fa-hourglass-half" style="color: var(--primary-amber);"></i> Monitor de Tiempos y Cola de Espera
+    </h2>
+
+    <!-- Widget de Capacidad del Turno -->
+    <div style="max-width: 900px; margin: 0 auto 20px auto; padding: 0 15px;">
+        <div class="capacity-box">
+            <div class="capacity-title">
+                <i class="fa-solid fa-calculator"></i>
+                <div>
+                    <h3>Regla de Admisión y Despacho</h3>
+                    <p>5 cocineros en cocción y 5 en preparación (10 puestos concurrentes). Al liberarse un puesto, entra el siguiente pedido.</p>
+                </div>
+            </div>
+            <div class="capacity-tags">
+                <div class="cap-badge">Puestos Ocupados: <strong>Activos en Cocina</strong></div>
+                <div class="cap-badge">En Cola: <strong>Espera de Slot</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>N° Pedido</th>
+                    <th>Fecha y Hora de Ingreso</th>
+                    <th>Estado de Admisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                <tr>
+                    <td><strong>#{{ pedido[0] }}</strong></td>
+                    <td>{{ pedido[1] }}</td>
+                    <td>
+                        <span style="background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); padding: 4px 10px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700;">
+                            <i class="fa-solid fa-circle-check"></i> Registrado en Cola
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 25px;">
+                        No hay pedidos registrados en la base de datos.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartado Principal</title>
+    <!-- Favicon apuntando directo a la ruta estática -->
+    <link rel="icon" type="image/png" href="static/img/favicon.ico">
+    
+    <!-- Tailwind CSS (CDN o tu archivo compilado) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="/static/CSS/Estilitos.css">      
+</head>
+
+<body class="bg-slate-50 text-slate-800 flex flex-col items-center justify-center min-h-screen gap-6">
+
+    <div class="div-inicio bg-white p-6 rounded-xl shadow-md w-80 text-center">
+        <h2 class="text-xl font-bold mb-2">MENU</h2>
+        <h3 class="text-slate-500 text-sm mb-4">Agrega, Edita o Borra platillos</h3>
+        <a href="/menu" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Ver Menu Completo</a>
+    </div>
+
+    <div class="div-inicio bg-white p-6 rounded-xl shadow-md w-80 text-center">
+        <h2 class="text-xl font-bold mb-2">Pedidos</h2>
+        <h3 class="text-slate-500 text-sm mb-4">Ve y agrega +pedidos</h3>
+        <a href="/pedidos" class="inline-block bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition">Ver Pedidos</a>
+    </div>
+
+</body>
+</html>
