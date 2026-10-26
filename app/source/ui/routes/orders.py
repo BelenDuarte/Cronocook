@@ -1,5 +1,6 @@
 from app.source.database import connect
 from app.source.web import server
+from flask import render_template
 
 @server.route('/orders')
 def orders_route():
@@ -20,9 +21,9 @@ def orders_route():
 	cursor.close()
 	connection.close()
 
-	orders = {}
+	list = {}
 
 	for id_pedido, nombre_comida, cantidad in items:
-		orders.setdefault(id_pedido, []).append((nombre_comida, cantidad))
+		list.setdefault(id_pedido, []).append((nombre_comida, cantidad))
 
-	return render_template('orders.html', pedidos=data, orders=orders)
+	return render_template('orders.html', orders=data, list=list)

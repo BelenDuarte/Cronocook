@@ -1,6 +1,3 @@
-import app.source.database
-import app.source.router
-
 from app.source.web import server
 
 if __name__ == "__main__":

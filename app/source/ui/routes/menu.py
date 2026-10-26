@@ -11,4 +11,4 @@ def menu_route():
 	cursor.close()
 	connection.close()
 
-	return render_template('menu.html', menu=data)
+	return render_template('menu.html', foods=data)

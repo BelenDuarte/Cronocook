@@ -1,73 +1,73 @@
 <!DOCTYPE html>
+
 <html lang="es">
+	<head>
+		<title>CRONOCOOK: Menú</title>
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="/static/img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vista Menu</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <link rel="stylesheet" href="/static/CSS/Estilitos.css">             
-</head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<body>
-    <!-- Enlace de navegación limpio para Litestar -->
-    <a href="/" class="volver">
-        <div>
-            <p>Volver a la pagina principal</p>
-        </div>
-    </a> 
+		<link rel="icon" type="image/png" href="/static/img/favicon.ico">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<link rel="stylesheet" href="/static/styles.css">
 
-    <h2 class="titulo-grande">Lista del menu</h2>
+		<script src="{{ url_for('static', filename='htmx.min.js') }}"></script>
+	</head>
 
-    <!-- Contenedor tarjetas -->
-    <div class="contenedor-cards" id="lista-menu">
-        {% for comida in menu %}
-        <div class="card-platillo" id="comida-{{ comida[0] }}">
+	<body>
+		<a href="/" class="volver">
+			<div>
+				<p>Volver</p>
+			</div>
+		</a>
 
-            <div class="card-imagen">
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" alt="{{ comida[1] }}">
-            </div>
+		<h2 class="titulo-grande">Lista</h2>
 
-            <div class="card-body">
-                <div class="card-header-info">
-                    <div class="card-title-box">
-                        <h3><i class="fa-solid fa-burger"></i> {{ comida[1] }}</h3>
-                        <p class="card-tiempo"><i class="fa-regular fa-clock"></i> Prep: {{ comida[2] }} | Coc: {{ comida[3] }}</p>
-                        <p class="card-envio"><i class="fa-solid fa-bicycle"></i> Gratis</p>
-                        <p class="card-rating"><i class="fa-solid fa-star"></i> 4.8</p>
-                    </div>
-                </div>
+		<div class="contenedor-cards" id="lista-menu">
+			{% for food in foods %}
+				<div class="card-platillo" id="comida-{{ food[0] }}">
+					<div class="card-imagen">
+						<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" alt="{{ food[1] }}">
+					</div>
 
-                <div class="card-botones">
-                    <!-- HTMX apuntando a las rutas REST de Litestar -->
-                    <button class="btn-card-borrar"
-                            hx-post="/comida/delete/{{ comida[0] }}"
-                            hx-target="#comida-{{ comida[0] }}"
-                            hx-swap="outerHTML"
-                            hx-confirm="¿Eliminar {{ comida[1] }}?">
-                        Borrar
-                    </button>
+					<div class="card-body">
+						<div class="card-header-info">
+							<div class="card-title-box">
+								<h3><i class="fa-solid fa-burger"></i> {{ food[1] }}</h3>
 
-                    <button class="btn-card-editar"
-                            hx-get="/comida/update/{{ comida[0] }}"
-                            hx-target="body">
-                        Editar
-                    </button>
-                </div>
-            </div>
+								<p class="card-tiempo"><i class="fa-regular fa-clock"></i> Prep: {{ food[2] }} | Coc: {{ food[3] }}</p>
+								<p class="card-envio"><i class="fa-solid fa-bicycle"></i> Gratis</p>
+								<p class="card-rating"><i class="fa-solid fa-star"></i> 4.8</p>
+							</div>
+						</div>
 
-        </div>
-        {% endfor %}
-    </div>
+						<div class="card-botones">
+							<button class="btn-card-borrar"
+								hx-post="/food/delete/{{ food[0] }}"
+								hx-target="#comida-{{ food[0] }}"
+								hx-swap="outerHTML"
+								hx-confirm="¿Eliminar {{ food[1] }}?"
+							>
+								Borrar
+							</button>
 
-    <a href="/comida/add" class="agregar">
-        <div>
-            <p>Agregar comida</p>
-        </div>
-    </a> 
+							<button class="btn-card-editar"
+								hx-get="/food/update/{{ food[0] }}"
+								hx-target="body"
+							>
+								Editar
+							</button>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 
-</body>
+		<a href="/food/add" class="agregar">
+			<div>
+				<p>Agregar comida</p>
+			</div>
+		</a>
 
+	</body>
 </html>

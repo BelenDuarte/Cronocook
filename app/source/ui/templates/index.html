@@ -1,117 +1,98 @@
 <!DOCTYPE html>
+
 <html lang="es">
+	<head>
+		<title>CRONOCOOK</title>
 
-    <head>
-        <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
-        <title>Apartado Principal</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='CSS/Estilitos.css')}}">
-        <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
-        />
-        <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        >
-    </head>
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}">
+		<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
-    <!-- Header -->
+		<script src="{{ url_for('static', filename='htmx.min.js') }}"></script>
+	</head>
 
+	<body>
+		<header>
+			<a href="#" class="logo"><i class="fas fa-hamburger"></i>CRONOCOOK Burger Shop!</a>
 
-    <header>
-        <a href="#" class="logo"><i class="fas fa-hamburger"></i> Hamburgesa.</a>
+			<nav class="navbar">
+				<a class = "active" href="#home">Incio</a>
+				<a href="{{ url_for('menu') }}">Menú</a>
+				<a href="#about">Información</a>
+				<a href="{{ url_for('orders') }}">Pedidos</a>
+			</nav>
 
-        <nav class="navbar">
-            <a class = "active" href="#home">home</a>
-            <a href="{{ url_for('menu') }}">menu</a>
-            <a href="#about">about</a>
-            <a href="{{ url_for('pedidos') }}">pedidos</a>
-        </nav>
+			<div class="icons">
+				<a href="#" class="fas fa-bars" id="menu-bar"></a>
+				<a href="#" class="fas fa-search" id="search-icon"></a>
+				<a href="#" class="fas fa-heart"></a>
+				<a href="#" class="fas fa-shopping-cart"></a>
+			</div>
+		</header>
 
-        <div class="icons">
-            <a href="#" class="fas fa-bars" id="menu-bar"></a>
-            <a href="#" class="fas fa-search" id="search-icon"></a>
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-shopping-cart"></a>
-        </div>
+		<section class="home" id="home">
+			<div class="swiper home-slide">
+				<div class="swiper-wrapper wrapp">
+					<div class="swiper-slide slide">
+						<div class="contenido">
+							<span>Hamburguesa</span>
+							<h3>Hamburguesa</h3>
+							<p>???</p>
+							<a href="#" class="btn">Pedir</a>
+						</div>
 
-    </header>
-    <!-- End Header -->
+						<div class="image">
+							<img src="{{ url_for('static', filename='images/burger.png') }}" alt="burger">
+						</div>
+					</div>
 
-    <section class="home" id="home">
-        <div class="swiper home-slide">
+					<div class="swiper-slide slide">
+						<div class="contenido">
+							<span>Hamburguesa</span>
+							<h3>Hamburguesa</h3>
+							<p>???</p>
+							<a href="#" class="btn">Pedir</a>
+						</div>
 
-            <div class="swiper-wrapper wrapp">
-                <!-- Inicio, 1 -->
-                <div class="swiper-slide slide">
+						<div class="image">
+							<img src="{{ url_for('static', filename='images/burger.png') }}" alt="burger">
+						</div>
+					</div>
 
-                    <div class="contenido">
-                        <span>Hamburger</span>
-                        <h3>hamburger</h3>
-                        <p>hamburgesa hamburgesa hamburgesa</p>
-                        <a href="#" class="btn">Pedilo ya!</a>
-                    </div>
+					<div class="swiper-slide slide">
+						<div class="contenido">
+							<span>Hamburguesa</span>
+							<h3>Hamburguesa</h3>
+							<p>???</p>
+							<a href="#" class="btn">Pedir</a>
+						</div>
 
-                    <div class="image">
-                        <img src="{{ url_for('static', filename='img/burger.png') }}" alt="burger">
-                    </div>
+						<div class="image">
+							<img src="{{ url_for('static', filename='images/burger.png') }}" alt="burger">
+						</div>
+					</div>
+				</div>
 
-                </div>
-                <!-- 2 -->
-                <div class="swiper-slide slide">
+				<div class="swiper-pagination"></div>
+			</div>
+		</section>
 
-                    <div class="contenido">
-                        <span>Hamburger</span>
-                        <h3>hamburger</h3>
-                        <p>hamburgesa hamburgesa hamburgesa</p>
-                        <a href="#" class="btn">Pedilo ya!</a>
-                    </div>
-
-                    <div class="image">
-                        <img src="{{ url_for('static', filename='img/burger.png') }}" alt="burger">
-                    </div>
-                </div>
-
-                <!-- 3 -->
-                <div class="swiper-slide slide">
-
-                    <div class="contenido">
-                        <span>Hamburger</span>
-                        <h3>hamburger</h3>
-                        <p>hamburgesa hamburgesa hamburgesa</p>
-                        <a href="#" class="btn">Pedilo ya!</a>
-                    </div>
-
-                    <div class="image">
-                        <img src="{{ url_for('static', filename='img/burger.png') }}" alt="burger">
-                    </div>
-                </div>
-                <!-- Fin -->
-
-
-            </div>
-
-            <div class="swiper-pagination"></div>
-
-        </div>
-
-    </section>
-
-
-    <body>
-        <!-- <div class = "div-inicio">
-            <h2>MENU</h2>
-            <h3>Agrega, Edita o Borra platillos</h3>
-            <a href="{{ url_for('menu') }}">Ver Menu Completo</a>
-        </div>
-
-        <div class = "div-inicio">
-            <h2>Pedidos</h2>
-            <h3>Ve y agrega +pedidos</h3>
-            <a href="{{ url_for('pedidos') }}">Ver Pedidos</a>
-        </div>  -->
-
-        <script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
-        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    </body>
-</html> 
+		<script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
+		<script>
+			var swiper = new Swiper('.home-slide', {
+				spaceBetween: 30,
+				centeredSlides: true,
+				autoplay: {
+					delay: 2500,
+					disableOnInteraction: false,
+				},
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+				loop:true,
+			});
+		</script>
+	</body>
+</html>

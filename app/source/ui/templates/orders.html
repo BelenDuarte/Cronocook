@@ -1,59 +1,65 @@
 <!DOCTYPE html>
+
 <html lang="es">
+	<head>
+		<title>CRONOCOOK: Pedidos</title>
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Pedidos</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='CSS/Estilitos.css')}}">
-</head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}">
+		<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
 
-<body>
-        <div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        </div>
-        <a href="{{ url_for('index') }}" class="volver">
-            <div>
-                <p>Volver a la pagina principal</p>
-            </div>
-        </a>
-        <h2 class="titulo-grande">Lista de pedidos</h2>
-        <div class = "tabla">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Fecha y Hora</th>
-                        <th>Comidas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for pedido in pedidos %}
-                    <tr>
-                        <td>{{pedido[0]}}</td>
-                        <td>{{pedido[1]}}</td>
-                        <td>
-                            <ul>
-                                {% for nombre_comida, cantidad in orders.get(pedido[0], []) %}
-                                    <li>{{cantidad}}x{{nombre_comida}}</li>
-                                {% endfor %}
-                            </ul>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-        </table>
-        <a href="{{ url_for('add_pedido') }}" class="agregar">
-            <div>
-                <p>Agregar pedido </p>
-            </div>
-        </a>
-    </div>
+		<script src="{{ url_for('static', filename='htmx.min.js') }}"></script>
+	</head>
 
-</body>
+	<body>
+		<div>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"     integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+		</div>
 
+		<a href="{{ url_for('index') }}" class="volver">
+			<div>
+				<p>Volver a la pagina principal</p>
+			</div>
+		</a>
+
+		<h2 class="titulo-grande">Lista de pedidos</h2>
+
+		<div class = "tabla">
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Fecha y horara</th>
+						<th>Comidas</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in list %}
+						<tr>
+							<td>{{item[0]}}</td>
+							<td>{{item[1]}}</td>
+							<td>
+								<ul>
+									{% for food, quantity in orders.get(item[0], []) %}
+										<li>{{quantity}}x{{food}}</li>
+									{% endfor %}
+								</ul>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+		</table>
+
+		<a href="{{ url_for('add-order') }}" class="agregar">
+			<div>
+				<p>Agregar pedido </p>
+			</div>
+		</a>
+	</div>
+
+	</body>
 </html>

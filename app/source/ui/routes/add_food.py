@@ -1,5 +1,6 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, request
 from app.source.web import server
+from app.source.database import connect
 
 @server.route('/add-food', methods=['GET', 'POST'])
 def add_food_route():
