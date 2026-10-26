@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='Imagenes/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vista Menu</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='CSS/Estilitos.css')}}">               
+    <title>Lista de Pedidos</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='CSS/Estilitos.css')}}">
 </head>
 
 
@@ -20,45 +20,38 @@
             <div>
                 <p>Volver a la pagina principal</p>
             </div>
-        </a> 
-        <h2 class="titulo-grande">Lista del menu</h2>
+        </a>
+        <h2 class="titulo-grande">Lista de pedidos</h2>
         <div class = "tabla">
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>                           
-                        <th>Platillo</th>
-                        <th>Tiempo de preparacion</th>
-                        <th>Tiempo de coccion</th>
+                        <th>ID</th>
+                        <th>Fecha y Hora</th>
+                        <th>Comidas</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for comida in menu %}
+                    {% for pedido in pedidos %}
                     <tr>
-                        <td>{{comida[0]}}</td>
-                        <td>{{comida[1]}}</td>
-                        <td>{{comida[2]}}</td> 
-                        <td>{{comida[3]}}</td>
+                        <td>{{pedido[0]}}</td>
+                        <td>{{pedido[1]}}</td>
                         <td>
-                            <form action="{{ url_for('delete_comida', id=comida[0]) }}" method="POST">
-                                <button type="submit">Borrar</button>
-                            </form>
-                        </td> <!--aca podemos darle la opcion de borrar un usuario-->
-                        <td>
-                            <form action="{{ url_for('update_comida', id=comida[0]) }}" method="GET">
-                                <button type="submit">Editar</button>
-                            </form>
+                            <ul>
+                                {% for nombre_comida, cantidad in orders.get(pedido[0], []) %}
+                                    <li>{{cantidad}}x{{nombre_comida}}</li>
+                                {% endfor %}
+                            </ul>
                         </td>
                     </tr>
-                {% endfor %}-
+                    {% endfor %}
                 </tbody>
         </table>
-        <a href="{{ url_for('add_comida') }}" class="agregar">
+        <a href="{{ url_for('add_pedido') }}" class="agregar">
             <div>
-                <p>Agregar comida </p>
+                <p>Agregar pedido </p>
             </div>
-        </a> 
-        
+        </a>
     </div>
 
 </body>

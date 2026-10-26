@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+		<title>Agregar pedido</title>
+	</head>
+
+	<body>
+		<a href="{{ url_for('orders') }}" class="volver">
+			<div>
+				<p>Volver</p>
+			</div>
+		</a>
+
+		<h2 class="titulo-grande">Agregar nuevo</h2>
+
+		<form action="{{ url_for('add_order') }}" method="POST">
+			{% for food in foods %}
+				<label for="cantidad_{{ food[0] }}">{{food[1]}}</label>
+				<input type="number" name="cantidad_{{ food[0] }}" placeholder="Cantidad de {{ food[1] }}" min="0" value="0">
+			{% endfor %}
+
+			<button type="submit">Confirmar</button>
+		</form>
+	</body>
+</html>
