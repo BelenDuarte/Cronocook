@@ -1,7 +1,7 @@
 import app.source.database
-import app.source.ui
+import app.source.router
 
 from app.source.web import server
 
 if __name__ == "__main__":
-    server.run(debug=True, host='0.0.0.0', port=8000)
+	server.run(debug=True, host='0.0.0.0', port=8000)
